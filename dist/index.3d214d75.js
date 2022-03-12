@@ -523,6 +523,8 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _setup = require("./setup");
 var _gameBoard = require("./GameBoard");
 var _gameBoardDefault = parcelHelpers.interopDefault(_gameBoard);
+var _pacman = require("./Pacman");
+var _pacmanDefault = parcelHelpers.interopDefault(_pacman);
 const GameGrid = document.querySelector('#game');
 const ScoreTable = document.querySelector('#score');
 const startButton = document.querySelector('#start-button');
@@ -540,10 +542,16 @@ function startGame() {
     score = 0;
     startButton.classList.add('hide');
     gameBoard.createGrid(_setup.LEVEL);
+    const pacman = new _pacmanDefault.default(2, 4, 5);
+    gameBoard.addObject(4, 5, [
+        _setup.OBJECT_TYPE.PACMAN
+    ]);
 }
 startButton.addEventListener('click', startGame);
+function gameLoop(pacaman) {
+}
 
-},{"./setup":"b1uhz","./GameBoard":"2NYHR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"b1uhz":[function(require,module,exports) {
+},{"./setup":"b1uhz","./GameBoard":"2NYHR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Pacman":"dnwXd"}],"b1uhz":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "GRID_SIZE", ()=>GRID_SIZE
@@ -1126,7 +1134,7 @@ class GameBoard {
         this.grid = new Array(this.cols);
         for(let i = 0; i < this.rows; i++)this.grid[i] = new Array(this.cols);
         let i1 = 0;
-        for(let r = 0; r < 20; r++)for(let c = 0; c < 23; c++){
+        for(let r = 0; r < 23; r++)for(let c = 0; c < 20; c++){
             this.grid[r][c] = document.createElement('div');
             this.grid[r][c].classList.add('square', _setup.CLASS_LIST[level[i1]]);
             this.grid[r][c].style.cssText = `width:${_setup.CELL_SIZE}px;height: ${_setup.CELL_SIZE}px;`;
@@ -1160,6 +1168,56 @@ class GameBoard {
     }
 }
 exports.default = GameBoard;
+
+},{"./setup":"b1uhz","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dnwXd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _setup = require("./setup");
+class Pacman {
+    constructor(speed, startX, startY){
+        this.x = startX;
+        this.y = startY;
+        this.speed = speed;
+        this.dir = null;
+        this.timer = 0;
+        this.powerPill = false;
+        this.rotation = true;
+    }
+    shouldMove() {
+        if (!this.dir) return false;
+        if (this.timer === this.speed) {
+            this.timer = 0;
+            return true;
+        }
+        this.timer++;
+    }
+    getNextMove(objectExists) {
+        let nextMovePosX = this.x + this.dir.movement;
+        let nextMovePosY = this.y + this.dir.movement;
+        if (objectExists(nextMovePosX, nextMovePosY, _setup.OBJECT_TYPE.WALL) || objectExists(nextMovePosX, nextMovePosY, _setup.OBJECT_TYPE.GHOST)) {
+            nextMovePosX = this.x;
+            nextMovePosY = this.y;
+        }
+        return {
+            nextMovePosX,
+            nextMovePosY,
+            direction: this.dir
+        };
+    }
+    makeMove() {
+        const classesToRemove = [
+            _setup.OBJECT_TYPE.PACMAN
+        ];
+        const classesToAdd = [
+            _setup.OBJECT_TYPE.PACMAN
+        ];
+        return {
+            classesToRemove,
+            classesToAdd
+        };
+    }
+}
+exports.default = Pacman;
 
 },{"./setup":"b1uhz","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["iKiqL","bB7Pu"], "bB7Pu", "parcelRequire7949")
 

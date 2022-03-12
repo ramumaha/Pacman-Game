@@ -25,8 +25,8 @@ class GameBoard{
             this.grid[i]=new Array(this.cols);
         }
        let i=0;
-        for(let r=0;r<20;r++){
-            for(let c=0;c<23;c++){
+        for(let r=0;r<23;r++){
+            for(let c=0;c<20;c++){
                 this.grid[r][c]=document.createElement('div');
                 this.grid[r][c].classList.add('square',CLASS_LIST[level[i]]);
                 this.grid[r][c].style.cssText=`width:${CELL_SIZE}px;height: ${CELL_SIZE}px;`;
@@ -53,7 +53,7 @@ class GameBoard{
     }
 
 
-    
+
     addObject(x,y,classes){
         this.grid[x][y].classList.add(...classes);
     }

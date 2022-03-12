@@ -1,6 +1,7 @@
 import {LEVEL,OBJECT_TYPE} from './setup';
 
 import GameBoard from './GameBoard';
+import Pacman from './Pacman'
 
 const GameGrid=document.querySelector('#game');
 const ScoreTable=document.querySelector('#score');
@@ -22,6 +23,13 @@ function startGame(){
     score=0;
     startButton.classList.add('hide');
     gameBoard.createGrid(LEVEL);
+    const pacman=new Pacman(2,4,5);
+    gameBoard.addObject(4,5,[OBJECT_TYPE.PACMAN]);
 
 }
+
 startButton.addEventListener('click',startGame);
+
+function gameLoop(pacaman){
+
+}

@@ -4,7 +4,8 @@ class Pacman{
     constructor(speed,startX,startY){
         this.x=startX;
         this.y=startY;
-        this.dir=NULL;
+        this.speed=speed
+        this.dir=null;
         this.timer=0;
         this.powerPill=false;
         this.rotation=true;
