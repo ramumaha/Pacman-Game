@@ -21,7 +21,6 @@ function startGame(){
     powerPillActive=false;
     score=0;
     startButton.classList.add('hide');
-
     gameBoard.createGrid(LEVEL);
 
 }

@@ -1131,6 +1131,7 @@ class GameBoard {
             this.grid[r][c].classList.add('square', _setup.CLASS_LIST[level[i1]]);
             this.grid[r][c].style.cssText = `width:${_setup.CELL_SIZE}px;height: ${_setup.CELL_SIZE}px;`;
             this.DOMGrid.appendChild(this.grid[r][c]);
+            if (_setup.CLASS_LIST[level[i1]] == _setup.OBJECT_TYPE.DOT) this.dotCount++;
             i1++;
         }
     }
@@ -1144,6 +1145,18 @@ class GameBoard {
         div.classList.add('game-status');
         div.innerHTML = `${gameWin ? 'WIN!' : 'GAMEOVER'}`;
         this.DOMGrid.appendChild(div);
+    }
+    addObject(x, y, classes) {
+        this.grid[x][y].classList.add(...classes);
+    }
+    removeObject(x, y, classes) {
+        this.grid[x][y].remove(...classes);
+    }
+    objectExists = (x, object)=>{
+        return this.grid[x][y].classList.contains(object);
+    };
+    rotateDiv(x, y, deg) {
+        this.grid[x][y].style.transform = `rotate(${deg}deg)`;
     }
 }
 exports.default = GameBoard;

@@ -31,17 +31,14 @@ class GameBoard{
                 this.grid[r][c].classList.add('square',CLASS_LIST[level[i]]);
                 this.grid[r][c].style.cssText=`width:${CELL_SIZE}px;height: ${CELL_SIZE}px;`;
                 this.DOMGrid.appendChild(this.grid[r][c]);
+                if(CLASS_LIST[level[i]]==OBJECT_TYPE.DOT){
+                    this.dotCount++;
+                }
                 i++;
             }
-        }
-        
-        
-        
-
-    
+        }    
         
     }
-
     static createGameBoard(DOMGrid,level){
         const board=new this(DOMGrid);
         board.createGrid(level);
@@ -54,6 +51,25 @@ class GameBoard{
         div.innerHTML=`${gameWin ? 'WIN!' : 'GAMEOVER'}`
         this.DOMGrid.appendChild(div);
     }
+
+
+    
+    addObject(x,y,classes){
+        this.grid[x][y].classList.add(...classes);
+    }
+       
+    removeObject(x,y,classes){
+        this.grid[x][y].remove(...classes);
+    }
+
+    objectExists=(x,object)=>{
+        return this.grid[x][y].classList.contains(object);
+    }
+
+    rotateDiv(x,y,deg){
+        this.grid[x][y].style.transform=`rotate(${deg}deg)`;
+    }
+
 
     
 
